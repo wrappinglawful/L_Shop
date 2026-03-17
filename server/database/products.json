@@ -1,0 +1,50 @@
+[
+  {
+    "id": "1",
+    "title": "Smartphone X10",
+    "price": 599,
+    "isAvailable": true,
+    "description": "Powerful smartphone with high-end camera.",
+    "categories": ["Electronics", "Smartphones"],
+    "images": {
+      "preview": "https://via.placeholder.com/150"
+    },
+    "delivery": {
+      "startTown": { "country": "USA", "town": "New York" },
+      "earlyDate": "2026-03-20T12:00:00Z",
+      "price": 10
+    }
+  },
+  {
+    "id": "2",
+    "title": "Laptop Pro 15",
+    "price": 1299,
+    "isAvailable": true,
+    "description": "High-performance laptop for professionals.",
+    "categories": ["Electronics", "Laptops"],
+    "images": {
+      "preview": "https://via.placeholder.com/150"
+    },
+    "delivery": {
+      "startTown": { "country": "USA", "town": "San Francisco" },
+      "earlyDate": "2026-03-22T12:00:00Z",
+      "price": 20
+    }
+  },
+  {
+    "id": "3",
+    "title": "Wireless Headphones",
+    "price": 199,
+    "isAvailable": true,
+    "description": "Noise-cancelling wireless headphones.",
+    "categories": ["Electronics", "Audio"],
+    "images": {
+      "preview": "https://via.placeholder.com/150"
+    },
+    "delivery": {
+      "startTown": { "country": "USA", "town": "Chicago" },
+      "earlyDate": "2026-03-19T12:00:00Z",
+      "price": 5
+    }
+  }
+]
