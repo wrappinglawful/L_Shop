@@ -1,1 +1,33 @@
-[]
+[
+  {
+    "id": "ab0e74fd-1270-48d9-8348-6328b43d60e6",
+    "userId": "ab0e74fd-1270-48d9-8348-6328b43d60e6",
+    "basket": [
+      {
+        "count": 7,
+        "products": {
+          "id": "3",
+          "title": "Wireless Headphones",
+          "price": 199,
+          "isAvailable": true,
+          "description": "Noise-cancelling wireless headphones.",
+          "categories": [
+            "Electronics",
+            "Audio"
+          ],
+          "images": {
+            "preview": "https://via.placeholder.com/150"
+          },
+          "delivery": {
+            "startTown": {
+              "country": "USA",
+              "town": "Chicago"
+            },
+            "earlyDate": "2026-03-19T12:00:00Z",
+            "price": 5
+          }
+        }
+      }
+    ]
+  }
+]

@@ -22,7 +22,7 @@ const Login: React.FC = () => {
 
   return (
     <div className="auth-page">
-      <div className="auth-card card">
+      <div className="auth-card glass">
         <h2>Welcome Back</h2>
         <p className="auth-subtitle">Login to your account</p>
         

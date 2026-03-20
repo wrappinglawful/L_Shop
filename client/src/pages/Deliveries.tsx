@@ -18,13 +18,13 @@ const DeliveryPage: React.FC = () => {
     <div className="deliveries-page">
       <h1>My Deliveries</h1>
       {deliveries.length === 0 ? (
-        <div className="empty-state card">
+        <div className="empty-state glass">
           <p>No deliveries found. Make your first order!</p>
         </div>
       ) : (
         <div className="deliveries-list">
           {deliveries.map(d => (
-            <div key={d.id} className="delivery-card card">
+            <div key={d.id} className="delivery-card glass">
               <div className="delivery-header">
                 <div>
                   <span className="order-id">Order #{d.id.toString().slice(0, 8)}</span>

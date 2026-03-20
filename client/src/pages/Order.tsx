@@ -31,7 +31,7 @@ const OrderPage: React.FC = () => {
 
   return (
     <div className="order-page container-sm">
-      <div className="order-card card">
+      <div className="order-card glass">
         <h2>Checkout</h2>
         <form onSubmit={handleSubmit} data-delivery className="order-form">
           <section className="form-section">

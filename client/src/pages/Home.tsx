@@ -34,7 +34,7 @@ const Home: React.FC = () => {
 
   return (
     <div className="home-container">
-      <section className="filters card">
+      <section className="filters glass">
         <div className="filter-group">
           <label>Search</label>
           <input 
@@ -83,7 +83,7 @@ const Home: React.FC = () => {
 
       <div className="products-grid">
         {products.map(p => (
-          <div key={p.id} className="product-card card">
+          <div key={p.id} className="product-card glass">
             <div className="product-image">
               <img src={p.images.preview} alt={p.title} />
               {p.discount && <span className="discount-badge">-{p.discount}%</span>}

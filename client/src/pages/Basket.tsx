@@ -36,7 +36,7 @@ const BasketPage: React.FC = () => {
       <div className="basket-content">
         <div className="basket-items">
           {basket.basket.map(item => (
-            <div key={item.products.id} className="basket-item card">
+            <div key={item.products.id} className="basket-item glass">
               <img src={item.products.images.preview} alt={item.products.title} className="item-img" />
               <div className="item-details">
                 <h3 data-title="basket">{item.products.title}</h3>
@@ -58,7 +58,7 @@ const BasketPage: React.FC = () => {
         </div>
 
         <aside className="basket-summary">
-          <div className="card summary-card">
+          <div className="glass summary-card">
             <h3>Order Summary</h3>
             <div className="summary-row">
               <span>Subtotal</span>

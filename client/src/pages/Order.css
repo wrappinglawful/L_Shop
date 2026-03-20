@@ -1,29 +1,30 @@
 .order-page {
-  padding: 2rem 0;
+  padding: 3rem 0;
 }
 
 .order-card {
-  padding: 2.5rem;
+  padding: 3.5rem;
 }
 
 .order-form {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 2.5rem;
   text-align: left;
 }
 
 .form-section h3 {
-  font-size: 1.1rem;
-  margin-bottom: 1.25rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--border-color);
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
 }
 
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  gap: 1.25rem;
 }
 
 .form-field.full-width {
@@ -33,11 +34,22 @@
 .form-field {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.6rem;
 }
 
 .form-field label {
   font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.order-form select {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.order-form select option {
+  background: #764ba2;
+  color: white;
 }

@@ -1,34 +1,34 @@
 .basket-page {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 2.5rem;
 }
 
 .basket-content {
   display: grid;
-  grid-template-columns: 1fr 350px;
-  gap: 2rem;
+  grid-template-columns: 1fr 380px;
+  gap: 2.5rem;
   align-items: flex-start;
 }
 
 .basket-items {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 .basket-item {
   display: flex;
-  padding: 1.25rem;
-  gap: 1.5rem;
+  padding: 1.5rem;
+  gap: 2rem;
   align-items: center;
 }
 
 .item-img {
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: 15px;
 }
 
 .item-details {
@@ -36,44 +36,45 @@
 }
 
 .item-details h3 {
-  font-size: 1.1rem;
-  margin-bottom: 0.25rem;
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
 }
 
 .item-price {
   color: var(--text-muted);
-  font-weight: 500;
-  margin-bottom: 1rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
 }
 
 .item-actions {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 2rem;
 }
 
 .quantity-controls {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  background: #f1f5f9;
-  padding: 4px;
-  border-radius: 6px;
+  gap: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 6px;
+  border-radius: 12px;
 }
 
 .btn-qty {
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   border: none;
   background: white;
-  border-radius: 4px;
-  font-weight: 700;
-  box-shadow: var(--shadow);
+  color: #4f46e5;
+  border-radius: 8px;
+  font-weight: 800;
 }
 
 .qty-value {
-  font-weight: 600;
-  min-width: 20px;
+  font-weight: 700;
+  min-width: 24px;
   text-align: center;
 }
 
@@ -81,51 +82,54 @@
   background: none;
   border: none;
   color: var(--error-color);
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .item-total {
-  font-weight: 700;
-  font-size: 1.1rem;
+  font-weight: 800;
+  font-size: 1.4rem;
 }
 
 .summary-card {
-  padding: 1.5rem;
+  padding: 2.5rem;
 }
 
 .summary-row {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
+  font-weight: 500;
 }
 
 .summary-row .free {
   color: var(--success-color);
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .summary-divider {
   height: 1px;
-  background: var(--border-color);
-  margin: 1rem 0;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 1.5rem 0;
 }
 
 .summary-row.total {
-  font-size: 1.25rem;
-  font-weight: 800;
-  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin-bottom: 2rem;
 }
 
 .empty-state {
   text-align: center;
-  padding: 4rem 2rem;
+  padding: 6rem 2rem;
 }
 
-.empty-state h2 { margin-bottom: 0.5rem; }
-.empty-state p { color: var(--text-muted); margin-bottom: 2rem; }
+.empty-state h2 { font-size: 2rem; margin-bottom: 1rem; }
+.empty-state p { color: var(--text-muted); margin-bottom: 2.5rem; }
 
-@media (max-width: 900px) {
+@media (max-width: 1000px) {
   .basket-content {
     grid-template-columns: 1fr;
   }

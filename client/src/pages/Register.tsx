@@ -22,7 +22,7 @@ const Register: React.FC = () => {
 
   return (
     <div className="auth-page">
-      <div className="auth-card card">
+      <div className="auth-card glass">
         <h2>Create Account</h2>
         
         <form onSubmit={handleSubmit} data-registration className="auth-form">
