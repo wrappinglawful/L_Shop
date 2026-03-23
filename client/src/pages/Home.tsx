@@ -105,7 +105,29 @@ const Home: React.FC = () => {
               
               {p.isAvailable && (
                 <div className="add-to-cart">
-                  <input type="number" defaultValue={1} min={1} id={`count-${p.id}`} className="count-input" />
+                  <div className="quantity-input-wrapper">
+                    <input type="number" defaultValue={1} min={1} id={`count-${p.id}`} />
+                    <div className="quantity-controls-vertical">
+                      <button 
+                        className="btn-step" 
+                        onClick={() => {
+                          const input = document.getElementById(`count-${p.id}`) as HTMLInputElement;
+                          input.stepUp();
+                        }}
+                      >
+                        ▲
+                      </button>
+                      <button 
+                        className="btn-step" 
+                        onClick={() => {
+                          const input = document.getElementById(`count-${p.id}`) as HTMLInputElement;
+                          input.stepDown();
+                        }}
+                      >
+                        ▼
+                      </button>
+                    </div>
+                  </div>
                   <button 
                     className="btn btn-primary"
                     onClick={() => {

@@ -6,7 +6,7 @@
 
 .basket-content {
   display: grid;
-  grid-template-columns: 1fr 380px;
+  grid-template-columns: 1fr 360px;
   gap: 2.5rem;
   align-items: flex-start;
 }
@@ -14,7 +14,7 @@
 .basket-items {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
 .basket-item {
@@ -25,10 +25,10 @@
 }
 
 .item-img {
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
   object-fit: cover;
-  border-radius: 15px;
+  border-radius: var(--radius-md);
 }
 
 .item-details {
@@ -36,15 +36,15 @@
 }
 
 .item-details h3 {
-  font-size: 1.3rem;
-  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+  margin-bottom: 0.25rem;
 }
 
 .item-price {
   color: var(--text-muted);
   font-weight: 600;
-  margin-bottom: 1.5rem;
-  font-size: 1.1rem;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
 }
 
 .item-actions {
@@ -57,24 +57,31 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  background: rgba(255, 255, 255, 0.1);
-  padding: 6px;
-  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 4px;
+  border-radius: 10px;
 }
 
 .btn-qty {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   border: none;
-  background: white;
-  color: #4f46e5;
-  border-radius: 8px;
+  background: var(--glass-border);
+  color: white;
+  border-radius: 6px;
   font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-qty:hover {
+  background: var(--primary-color);
 }
 
 .qty-value {
   font-weight: 700;
-  min-width: 24px;
+  min-width: 20px;
   text-align: center;
 }
 
@@ -82,7 +89,7 @@
   background: none;
   border: none;
   color: var(--error-color);
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -90,17 +97,18 @@
 
 .item-total {
   font-weight: 800;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
 }
 
 .summary-card {
-  padding: 2.5rem;
+  padding: 2rem;
 }
 
 .summary-row {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
+  color: var(--text-muted);
   font-weight: 500;
 }
 
@@ -111,23 +119,21 @@
 
 .summary-divider {
   height: 1px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--glass-border);
   margin: 1.5rem 0;
 }
 
 .summary-row.total {
-  font-size: 1.5rem;
-  font-weight: 900;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: white;
   margin-bottom: 2rem;
 }
 
 .empty-state {
   text-align: center;
-  padding: 6rem 2rem;
+  padding: 5rem 2rem;
 }
-
-.empty-state h2 { font-size: 2rem; margin-bottom: 1rem; }
-.empty-state p { color: var(--text-muted); margin-bottom: 2.5rem; }
 
 @media (max-width: 1000px) {
   .basket-content {

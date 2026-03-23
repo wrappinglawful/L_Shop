@@ -42,10 +42,27 @@ const BasketPage: React.FC = () => {
                 <h3 data-title="basket">{item.products.title}</h3>
                 <p className="item-price" data-price="basket">{item.products.price} $</p>
                 <div className="item-actions">
-                  <div className="quantity-controls">
-                    <button onClick={() => updateCount(item.products.id, item.count - 1)} className="btn-qty">-</button>
-                    <span className="qty-value">{item.count}</span>
-                    <button onClick={() => updateCount(item.products.id, item.count + 1)} className="btn-qty">+</button>
+                  <div className="quantity-input-wrapper">
+                    <input 
+                      type="number" 
+                      value={item.count} 
+                      readOnly
+                      id={`count-${item.products.id}`}
+                    />
+                    <div className="quantity-controls-vertical">
+                      <button 
+                        className="btn-step" 
+                        onClick={() => updateCount(item.products.id, item.count + 1)}
+                      >
+                        ▲
+                      </button>
+                      <button 
+                        className="btn-step" 
+                        onClick={() => updateCount(item.products.id, item.count - 1)}
+                      >
+                        ▼
+                      </button>
+                    </div>
                   </div>
                   <button onClick={() => removeItem(item.products.id)} className="btn-remove">Remove</button>
                 </div>
