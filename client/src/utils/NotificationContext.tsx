@@ -19,7 +19,7 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
   }, []);
 
   const closeAlert = useCallback(() => {
-    setModalConfig(prev => ({ ...prev, isOpen: false }));
+    setModalConfig((prev: { isOpen: boolean; title: string; message: string }) => ({ ...prev, isOpen: false }));
   }, []);
 
   return (

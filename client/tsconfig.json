@@ -6,9 +6,6 @@
     "lib": ["ES2023", "DOM", "DOM.Iterable"],
     "types": ["vite/client"],
     "jsx": "react-jsx",
-"moduleResolution": "node",
-"allowImportingTsExtensions": true,
-"noEmit": true,
     "skipLibCheck": true,
 
     /* Bundler mode */
@@ -26,5 +23,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src"]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.d.ts"],
 }
