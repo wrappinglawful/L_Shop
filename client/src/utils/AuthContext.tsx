@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import type { User, Basket } from '../types/index';
 import api from '../api';
 
@@ -7,7 +7,7 @@ interface AuthContextType {
   basket: Basket | null;
   login: (userData: User) => void;
   logout: () => void;
-  refreshBasket: () => void;
+  refreshBasket: () => Promise<void>;
   loading: boolean;
 }
 
@@ -18,40 +18,45 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [basket, setBasket] = useState<Basket | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const refreshBasket = async () => {
+  const refreshBasket = useCallback(async () => {
     try {
       const res = await api.get('/basket');
       setBasket(res.data);
     } catch (err) {
       setBasket(null);
     }
-  };
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const res = await api.get('/me');
-        setUser(res.data);
-        await refreshBasket();
-      } catch (err) {
-        setUser(null);
-      } finally {
-        setLoading(false);
-      }
-    };
-    checkAuth();
   }, []);
 
-  const login = (userData: User) => {
+  const checkAuth = useCallback(async () => {
+    try {
+      const res = await api.get('/me');
+      setUser(res.data);
+      await refreshBasket();
+    } catch (err) {
+      setUser(null);
+      setBasket(null);
+    } finally {
+      setLoading(false);
+    }
+  }, [refreshBasket]);
+
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
+
+  const login = useCallback((userData: User) => {
     setUser(userData);
     refreshBasket();
-  };
+  }, [refreshBasket]);
 
-  const logout = async () => {
-    await api.post('/logout');
-    setUser(null);
-    setBasket(null);
-  };
+  const logout = useCallback(async () => {
+    try {
+      await api.post('/logout');
+    } finally {
+      setUser(null);
+      setBasket(null);
+    }
+  }, []);
 
   return (
     <AuthContext.Provider value={{ user, basket, login, logout, refreshBasket, loading }}>

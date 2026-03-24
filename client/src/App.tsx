@@ -9,6 +9,8 @@ import BasketPage from './pages/Basket';
 import OrderPage from './pages/Order';
 import DeliveryPage from './pages/Deliveries';
 
+import ProtectedRoute from './components/ProtectedRoute';
+
 const App: React.FC = () => {
   return (
     <AuthProvider>
@@ -19,9 +21,30 @@ const App: React.FC = () => {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/basket" element={<BasketPage />} />
-            <Route path="/order" element={<OrderPage />} />
-            <Route path="/delivery" element={<DeliveryPage />} />
+            <Route 
+              path="/basket" 
+              element={
+                <ProtectedRoute>
+                  <BasketPage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/order" 
+              element={
+                <ProtectedRoute>
+                  <OrderPage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/delivery" 
+              element={
+                <ProtectedRoute>
+                  <DeliveryPage />
+                </ProtectedRoute>
+              } 
+            />
           </Routes>
         </main>
       </Router>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import api from '../api';
 import type { Product } from '../types/index';
 import { useAuth } from '../utils/AuthContext';
@@ -11,25 +11,41 @@ const Home: React.FC = () => {
   const [sortBy, setSortBy] = useState('price');
   const [order, setOrder] = useState('asc');
   const [available, setAvailable] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
+  
   const { user, refreshBasket } = useAuth();
 
-  const fetchProducts = async () => {
-    const params = { search, category, sortBy, order, available };
-    const res = await api.get('/products', { params });
-    setProducts(res.data);
-  };
+  const fetchProducts = useCallback(async () => {
+    setIsFetching(true);
+    try {
+      const params = { search, category, sortBy, order, available };
+      const res = await api.get('/products', { params });
+      setProducts(res.data);
+    } catch (err) {
+      console.error('Failed to fetch products', err);
+    } finally {
+      setIsFetching(false);
+    }
+  }, [search, category, sortBy, order, available]);
 
   useEffect(() => {
-    fetchProducts();
-  }, [search, category, sortBy, order, available]);
+    const timer = setTimeout(() => {
+      fetchProducts();
+    }, 300); // Debounce search
+    return () => clearTimeout(timer);
+  }, [fetchProducts]);
 
   const addToBasket = async (productId: string | number, count: number) => {
     if (!user) {
       alert('Please login to add to basket');
       return;
     }
-    await api.post('/basket', { productId, count });
-    await refreshBasket();
+    try {
+      await api.post('/basket', { productId, count });
+      await refreshBasket();
+    } catch (err) {
+      alert('Failed to add to basket');
+    }
   };
 
   return (
@@ -81,68 +97,76 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      <div className="products-grid">
-        {products.map(p => (
-          <div key={p.id} className="product-card glass">
-            <div className="product-image">
-              <img src={p.images.preview} alt={p.title} />
-              {p.discount && <span className="discount-badge">-{p.discount}%</span>}
-            </div>
-            <div className="product-info">
-              <div className="product-header">
-                <h3 data-title>{p.title}</h3>
-                <span className="product-price" data-price>{p.price} $</span>
-              </div>
-              <p className="product-desc">{p.description}</p>
-              <div className="product-meta">
-                <span className="category-tag">{p.categories[0]}</span>
-                {p.isAvailable ? (
-                  <span className="stock-status in-stock">Available</span>
-                ) : (
-                  <span className="stock-status out-of-stock">Out of stock</span>
-                )}
-              </div>
-              
-              {p.isAvailable && (
-                <div className="add-to-cart">
-                  <div className="quantity-input-wrapper">
-                    <input type="number" defaultValue={1} min={1} id={`count-${p.id}`} />
-                    <div className="quantity-controls-vertical">
+      {isFetching ? (
+        <div className="loading-spinner">Loading products...</div>
+      ) : (
+        <div className="products-grid">
+          {products.length > 0 ? (
+            products.map(p => (
+              <div key={p.id} className="product-card glass">
+                <div className="product-image">
+                  <img src={p.images.preview} alt={p.title} loading="lazy" />
+                  {p.discount && <span className="discount-badge">-{p.discount}%</span>}
+                </div>
+                <div className="product-info">
+                  <div className="product-header">
+                    <h3 data-title>{p.title}</h3>
+                    <span className="product-price" data-price>{p.price} $</span>
+                  </div>
+                  <p className="product-desc">{p.description}</p>
+                  <div className="product-meta">
+                    <span className="category-tag">{p.categories[0]}</span>
+                    {p.isAvailable ? (
+                      <span className="stock-status in-stock">Available</span>
+                    ) : (
+                      <span className="stock-status out-of-stock">Out of stock</span>
+                    )}
+                  </div>
+                  
+                  {p.isAvailable && (
+                    <div className="add-to-cart">
+                      <div className="quantity-input-wrapper">
+                        <input type="number" defaultValue={1} min={1} id={`count-${p.id}`} />
+                        <div className="quantity-controls-vertical">
+                          <button 
+                            className="btn-step" 
+                            onClick={() => {
+                              const input = document.getElementById(`count-${p.id}`) as HTMLInputElement;
+                              input.stepUp();
+                            }}
+                          >
+                            ▲
+                          </button>
+                          <button 
+                            className="btn-step" 
+                            onClick={() => {
+                              const input = document.getElementById(`count-${p.id}`) as HTMLInputElement;
+                              input.stepDown();
+                            }}
+                          >
+                            ▼
+                          </button>
+                        </div>
+                      </div>
                       <button 
-                        className="btn-step" 
+                        className="btn btn-primary"
                         onClick={() => {
-                          const input = document.getElementById(`count-${p.id}`) as HTMLInputElement;
-                          input.stepUp();
+                          const count = Number((document.getElementById(`count-${p.id}`) as HTMLInputElement).value);
+                          addToBasket(p.id, count);
                         }}
                       >
-                        ▲
-                      </button>
-                      <button 
-                        className="btn-step" 
-                        onClick={() => {
-                          const input = document.getElementById(`count-${p.id}`) as HTMLInputElement;
-                          input.stepDown();
-                        }}
-                      >
-                        ▼
+                        Add to Cart
                       </button>
                     </div>
-                  </div>
-                  <button 
-                    className="btn btn-primary"
-                    onClick={() => {
-                      const count = Number((document.getElementById(`count-${p.id}`) as HTMLInputElement).value);
-                      addToBasket(p.id, count);
-                    }}
-                  >
-                    Add to Cart
-                  </button>
+                  )}
                 </div>
-              )}
-            </div>
-          </div>
-        ))}
-      </div>
+              </div>
+            ))
+          ) : (
+            <div className="no-results glass">No products found matching your criteria.</div>
+          )}
+        </div>
+      )}
     </div>
   );
 };
