@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import api from '../api';
 import { useAuth } from '../utils/AuthContext';
+import { useNotification } from '../utils/NotificationContext';
 import './Auth.css';
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState({ name: '', password: '' });
   const { login } = useAuth();
+  const { showAlert } = useNotification();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -16,7 +18,7 @@ const Login: React.FC = () => {
       login(res.data);
       navigate('/');
     } catch (err: any) {
-      alert(err.response?.data?.message || 'Login failed');
+      showAlert('Login Failed', err.response?.data?.message || 'Invalid username or password.');
     }
   };
 

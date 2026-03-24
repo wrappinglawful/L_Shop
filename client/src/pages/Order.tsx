@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import api from '../api';
 import { useAuth } from '../utils/AuthContext';
 import type { Address } from '../types/index';
+import { useNotification } from '../utils/NotificationContext';
 import './Order.css';
 
 const OrderPage: React.FC = () => {
@@ -11,17 +12,18 @@ const OrderPage: React.FC = () => {
   const [email, setEmail] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('card');
   const { basket, refreshBasket } = useAuth();
+  const { showAlert } = useNotification();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       await api.post('/delivery', { address, phone, email, paymentMethod });
-      alert('Order placed successfully!');
+      showAlert('Order Placed', 'Your order has been successfully organized!');
       await refreshBasket();
       navigate('/delivery');
     } catch (err: any) {
-      alert(err.response?.data?.message || 'Order failed');
+      showAlert('Order Error', err.response?.data?.message || 'There was a problem placing your order.');
     }
   };
 

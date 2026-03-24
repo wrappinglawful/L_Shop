@@ -7,7 +7,7 @@ const Header: React.FC = () => {
   const { user, basket, logout } = useAuth();
 
   return (
-    <header className="header">
+    <header className="header animate-fade-in-down">
       <div className="header-content">
         <Link to="/" className="logo-text">Shop</Link>
         

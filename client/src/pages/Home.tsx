@@ -2,6 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import api from '../api';
 import type { Product } from '../types/index';
 import { useAuth } from '../utils/AuthContext';
+import { useNotification } from '../utils/NotificationContext';
+import Modal from '../components/Modal';
 import './Home.css';
 
 const Home: React.FC = () => {
@@ -12,8 +14,10 @@ const Home: React.FC = () => {
   const [order, setOrder] = useState('asc');
   const [available, setAvailable] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   
   const { user, refreshBasket } = useAuth();
+  const { showAlert } = useNotification();
 
   const fetchProducts = useCallback(async () => {
     setIsFetching(true);
@@ -37,20 +41,21 @@ const Home: React.FC = () => {
 
   const addToBasket = async (productId: string | number, count: number) => {
     if (!user) {
-      alert('Please login to add to basket');
+      showAlert('Authentication Required', 'Please login to add items to your basket.');
       return;
     }
     try {
       await api.post('/basket', { productId, count });
       await refreshBasket();
+      showAlert('Success', 'Product added to basket!');
     } catch (err) {
-      alert('Failed to add to basket');
+      showAlert('Error', 'Failed to add product to basket.');
     }
   };
 
   return (
     <div className="home-container">
-      <section className="filters glass">
+      <section className="filters glass animate-scale-in">
         <div className="filter-group">
           <label>Search</label>
           <input 
@@ -102,14 +107,14 @@ const Home: React.FC = () => {
       ) : (
         <div className="products-grid">
           {products.length > 0 ? (
-            products.map(p => (
-              <div key={p.id} className="product-card glass">
-                <div className="product-image">
+            products.map((p, idx) => (
+              <div key={p.id} className="product-card glass animate-scale-in" style={{ animationDelay: `${idx * 0.05}s` }}>
+                <div className="product-image" onClick={() => setSelectedProduct(p)} style={{ cursor: 'pointer' }}>
                   <img src={p.images.preview} alt={p.title} loading="lazy" />
                   {p.discount && <span className="discount-badge">-{p.discount}%</span>}
                 </div>
                 <div className="product-info">
-                  <div className="product-header">
+                  <div className="product-header" onClick={() => setSelectedProduct(p)} style={{ cursor: 'pointer' }}>
                     <h3 data-title>{p.title}</h3>
                     <span className="product-price" data-price>{p.price} $</span>
                   </div>
@@ -167,6 +172,41 @@ const Home: React.FC = () => {
           )}
         </div>
       )}
+
+      <Modal 
+        isOpen={!!selectedProduct} 
+        onClose={() => setSelectedProduct(null)} 
+        title={selectedProduct?.title || ''}
+      >
+        {selectedProduct && (
+          <div className="product-details-modal">
+            <img src={selectedProduct.images.preview} alt={selectedProduct.title} style={{ width: '100%', borderRadius: '12px', marginBottom: '1.5rem' }} />
+            <p style={{ fontSize: '1.1rem', marginBottom: '1rem' }}>{selectedProduct.description}</p>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+              <span style={{ fontSize: '1.5rem', fontWeight: '800' }}>{selectedProduct.price} $</span>
+              <span className={`stock-status ${selectedProduct.isAvailable ? 'in-stock' : 'out-of-stock'}`}>
+                {selectedProduct.isAvailable ? 'Available' : 'Out of stock'}
+              </span>
+            </div>
+            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '2rem' }}>
+              {selectedProduct.categories.map(c => (
+                <span key={c} className="category-tag">{c}</span>
+              ))}
+            </div>
+            {selectedProduct.isAvailable && (
+              <button 
+                className="btn btn-primary btn-block"
+                onClick={() => {
+                  addToBasket(selectedProduct.id, 1);
+                  setSelectedProduct(null);
+                }}
+              >
+                Add to Cart
+              </button>
+            )}
+          </div>
+        )}
+      </Modal>
     </div>
   );
 };
