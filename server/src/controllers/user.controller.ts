@@ -22,6 +22,8 @@ export class UserController {
     res.cookie('userId', newUser.id, {
       httpOnly: true,
       maxAge: 10 * 60 * 1000, // 10 minutes
+      sameSite: 'lax',
+      secure: process.env.NODE_ENV === 'production',
     });
 
     res.status(201).json({ id: newUser.id, name: newUser.name });
@@ -39,6 +41,8 @@ export class UserController {
     res.cookie('userId', user.id, {
       httpOnly: true,
       maxAge: 10 * 60 * 1000,
+      sameSite: 'lax',
+      secure: process.env.NODE_ENV === 'production',
     });
 
     res.json({ id: user.id, name: user.name });

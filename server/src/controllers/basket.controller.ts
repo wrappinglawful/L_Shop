@@ -45,6 +45,8 @@ export class BasketController {
 
   static async updateCount(req: Request, res: Response) {
     const userId = req.cookies.userId;
+    if (!userId) return res.status(401).json({ message: 'Not authorized' });
+
     const { productId, count } = req.body;
     const baskets = await FileService.read<Basket>('baskets.json');
     const basket = baskets.find(b => b.userId === userId);
@@ -52,8 +54,8 @@ export class BasketController {
 
     const item = basket.basket.find(i => i.products.id === productId);
     if (item) {
-      item.count = count;
-      if (item.count <= 0) {
+      item.count = Math.max(0, count);
+      if (item.count === 0) {
         basket.basket = basket.basket.filter(i => i.products.id !== productId);
       }
     }
